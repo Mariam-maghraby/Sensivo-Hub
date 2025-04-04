@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "temperature": "23 c",
+    "humidity": "90%",
+    "lat": 25.243143273449427,
+    "lng": 55.32663345336914,
+    "name": "sensor-1",
+    "status": "on",
+    "totalPowerConsumption": "23 kw"
+  },
+  {
+    "id": "2",
+    "temperature": "21 c",
+    "humidity": "92%",
+    "lat": 25.12235,
+    "lng": 55.37482,
+    "name": "sensor-2",
+    "status": "off",
+    "totalPowerConsumption": "23 kw"
+  }
+]
