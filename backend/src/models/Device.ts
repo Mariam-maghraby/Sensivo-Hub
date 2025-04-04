@@ -1,3 +1,6 @@
+import { readFile } from "fs/promises";
+import path from "path";
+
 export class Device {
   id: string;
   temperature: string;
@@ -71,3 +74,17 @@ export class DeviceDetails extends Device {
     this.totalPowerConsumptionPerMonth = totalPowerConsumptionPerMonth;
   }
 }
+
+export const findALlDevices = async (): Promise<Device[]> => {
+  const filePath = path.join(__dirname, "../../data/devices.json");
+  const fileData = await readFile(filePath, "utf-8");
+  const devices: Device[] = JSON.parse(fileData);
+  return devices;
+};
+
+export const findDeviceById = async (
+  id: string,
+): Promise<Device | undefined> => {
+  const devices = await findALlDevices();
+  return devices.find((device) => device.id === id);
+};

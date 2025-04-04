@@ -11,17 +11,14 @@ export const post__auth_login = async (
   next: NextFunction,
 ) => {
   try {
-    console.log("auth: login request", req.body);
     const errors = validationResult(req);
-    console.log("auth: errors", errors);
+
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() });
     }
     const { email, password } = req.body;
-    console.log("auth: email", email);  
-    console.log("auth: password", password);
     const user = findUserByEmail(email);
-    console.log("auth: user", user);
+
     if (user) {
       const isPasswordMatch = await verifyPassword(password, user.password);
       if (isPasswordMatch) {
