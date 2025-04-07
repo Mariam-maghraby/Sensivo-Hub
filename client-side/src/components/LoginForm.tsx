@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { login, ICredentials } from "../services/authService";
 
-export const AuthenticationForm = (props: PaperProps) => {
+export const LoginForm = (props: PaperProps) => {
   const type = "login"; // Hardcoded for now, can be changed later
   const form = useForm({
     initialValues: {
