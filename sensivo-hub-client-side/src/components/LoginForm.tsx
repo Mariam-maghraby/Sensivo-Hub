@@ -1,8 +1,5 @@
 import {
-  Anchor,
   Button,
-  Checkbox,
-  Divider,
   Group,
   Paper,
   PaperProps,
@@ -12,64 +9,64 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { upperFirst, useToggle } from "@mantine/hooks";
+import { upperFirst } from "@mantine/hooks";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { login, ICredentials } from "../services/authService";
 
 export const AuthenticationForm = (props: PaperProps) => {
-  console.log("AuthForm mounted");
-  const [type, toggle] = useToggle(["login", "register"]);
+  const type = "login"; // Hardcoded for now, can be changed later
   const form = useForm({
     initialValues: {
-      email: "",
-      name: "",
+      username: "",
       password: "",
-      terms: true,
     },
 
     validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
       password: (val) =>
-        val.length <= 6
-          ? "Password should include at least 6 characters"
+        val.length <= 5
+          ? "Password should include at least 5 characters"
           : null,
+    },
+  });
+
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (cred: ICredentials) => {
+      return login(cred);
+    },
+    onSuccess: (data: string) => {
+      localStorage.setItem("jwtToken", data); // Store JWT token in local storage
+      navigate("/home"); // Redirect user after successful login
+    },
+    onError: (error: any) => {
+      alert(error.message);
     },
   });
 
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Text size="lg" fw={500}>
-        Welcome to Mantine, {type} with
+        Welcome to Sensivo Hub, {type} with
       </Text>
 
-      <Group grow mb="md" mt="md">
-        {/* <GoogleButton radius="xl">Google</GoogleButton>
-        <TwitterButton radius="xl">Twitter</TwitterButton> */}
-      </Group>
-
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
-
-      <form onSubmit={form.onSubmit(() => {})}>
+      <form
+        onSubmit={form.onSubmit(() => {
+          mutation.mutate({
+            email: form.values.username,
+            password: form.values.password,
+          } as unknown as ICredentials);
+        })}>
         <Stack>
-          {type === "register" && (
-            <TextInput
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
-              onChange={(event) =>
-                form.setFieldValue("name", event.currentTarget.value)
-              }
-              radius="md"
-            />
-          )}
-
           <TextInput
+            label="Username"
             required
-            label="Email"
-            placeholder="hello@mantine.dev"
-            value={form.values.email}
+            placeholder="Your username"
+            value={form.values.username}
             onChange={(event) =>
-              form.setFieldValue("email", event.currentTarget.value)
+              form.setFieldValue("username", event.currentTarget.value)
             }
-            error={form.errors.email && "Invalid email"}
             radius="md"
           />
 
@@ -83,33 +80,13 @@ export const AuthenticationForm = (props: PaperProps) => {
             }
             error={
               form.errors.password &&
-              "Password should include at least 6 characters"
+              "Password should include at least 5 characters"
             }
             radius="md"
           />
-
-          {type === "register" && (
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue("terms", event.currentTarget.checked)
-              }
-            />
-          )}
         </Stack>
 
         <Group justify="space-between" mt="xl">
-          <Anchor
-            component="button"
-            type="button"
-            c="dimmed"
-            onClick={() => toggle()}
-            size="xs">
-            {type === "register"
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
-          </Anchor>
           <Button type="submit" radius="xl">
             {upperFirst(type)}
           </Button>
@@ -117,4 +94,4 @@ export const AuthenticationForm = (props: PaperProps) => {
       </form>
     </Paper>
   );
-}
+};
