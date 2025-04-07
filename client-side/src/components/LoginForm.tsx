@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { login, ICredentials } from "../services/authService";
 
-export const AuthenticationForm = (props: PaperProps) => {
+export const LoginForm = (props: PaperProps) => {
   const type = "login"; // Hardcoded for now, can be changed later
   const form = useForm({
     initialValues: {
@@ -54,9 +54,9 @@ export const AuthenticationForm = (props: PaperProps) => {
       <form
         onSubmit={form.onSubmit(() => {
           mutation.mutate({
-            email: form.values.username,
+            username: form.values.username,
             password: form.values.password,
-          } as unknown as ICredentials);
+          });
         })}>
         <Stack>
           <TextInput

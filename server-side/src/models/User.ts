@@ -4,7 +4,7 @@ import path from "path";
 export class User {
   id: string;
   name: string;
-  email: string;
+  username: string;
   password: string;
   role: string;
   createdAt: Date;
@@ -13,13 +13,13 @@ export class User {
   constructor(
     id: string,
     name: string,
-    email: string,
+    username: string,
     password: string,
     role: string,
   ) {
     this.id = id;
     this.name = name;
-    this.email = email;
+    this.username = username;
     this.password = password;
     this.role = role;
     this.createdAt = new Date();
@@ -27,10 +27,10 @@ export class User {
   }
 }
 
-export const findUserByEmail = (email: string): User | undefined => {
+export const findUserByUsername = (username: string): User | undefined => {
   const filePath = path.join(__dirname, "../../data/users.json");
   const fileData = readFileSync(filePath, "utf-8");
   const users: User[] = JSON.parse(fileData);
 
-  return users.find((user) => user.email === email);
+  return users.find((user) => user.username === username);
 };
