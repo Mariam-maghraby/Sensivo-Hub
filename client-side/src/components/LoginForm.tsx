@@ -54,9 +54,9 @@ export const AuthenticationForm = (props: PaperProps) => {
       <form
         onSubmit={form.onSubmit(() => {
           mutation.mutate({
-            email: form.values.username,
+            username: form.values.username,
             password: form.values.password,
-          } as unknown as ICredentials);
+          });
         })}>
         <Stack>
           <TextInput
