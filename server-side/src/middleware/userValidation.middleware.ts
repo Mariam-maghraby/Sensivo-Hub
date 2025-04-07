@@ -25,6 +25,6 @@ export const validateUserCreate = [
 ];
 
 export const validateUser = [
-  body("email").notEmpty().isEmail().withMessage("Email is required"),
+  body("username").notEmpty().isEmail().withMessage("Email is required"),
   body("password").notEmpty().withMessage("Password is required"),
 ];

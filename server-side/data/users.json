@@ -2,16 +2,16 @@
   {
     "id": "1",
     "name": "Mariam Maghraby",
-    "email": "mariam@gamil.com",
-    "password": "123456",
-    "role": "admin",
+    "username": "mariam@gamil.com",
+    "password": "$2a$10$IVHSD0p0lQMAhLBqvl9k6.q0kvv9xuiKVZoV4UD2GBzBTT5jyMcma",
+    "role": "operator",
     "createdAt": "2023-10-01T12:00:00Z",
     "updatedAt": "2023-10-01T12:00:00Z"
   },
   {
     "id": "2",
     "name": "John Doe",
-    "email": "john.doe@gamil.com",
+    "username": "john.doe@gamil.com",
     "password": "$2a$10$IVHSD0p0lQMAhLBqvl9k6.q0kvv9xuiKVZoV4UD2GBzBTT5jyMcma",
     "role": "admin",
     "createdAt": "2023-10-01T12:00:00Z",
